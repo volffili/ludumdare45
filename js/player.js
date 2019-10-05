@@ -39,9 +39,10 @@ var Player = Sprite.extend({
         this.yacc = 0;
         this.currentAnim = this.anim.idle;
         this.frame = this.currentAnim.start;
+        this.energy = 100;
     },
 
-    update:function(){
+    update:function(collidingTiles){
         this._super();
         this.xacc = this.game.input.isDown("right") - this.game.input.isDown("left");
         this.yacc = this.game.input.isDown("down") - this.game.input.isDown("up");
@@ -52,12 +53,29 @@ var Player = Sprite.extend({
             this.yacc /= this.norm;
         }
 
+        var crashed = 0;
+        var stabbed = 0;
+        for(i=0; i<collidingTiles.length;i++){
+            tile = collidingTiles[i];
+            if (tile.tileType == 3){
+                crashed = 1;
+            }
+            else if(tile.tileType == 5){
+                this.energy -= 10 * this.game.delta;
+            }
+        }
+
         this.xmov += this.xacc*this.game.delta*40;
         this.ymov += this.yacc*this.game.delta*40;
-        this.xmov *= Math.pow(this.friction,this.game.delta);
-        this.ymov *= Math.pow(this.friction,this.game.delta);
+        this.xmov *= Math.pow(this.friction,this.game.delta) * (1- 2.2*crashed);
+        this.ymov *= Math.pow(this.friction,this.game.delta)* (1- 2.2*crashed);
+
+
+
 
         this.x += this.xmov;
         this.y += this.ymov;
+
+
     }
 });

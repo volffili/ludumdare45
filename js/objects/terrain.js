@@ -24,7 +24,29 @@ var Terrain = Class.extend({
             }
         }
 
+    },
+
+    getCollidingTiles: function (player) {
+        collidingTiles = [];
+
+        var firstRow = Math.max(Math.floor(player.y / this.tileSize)-3,0);
+        var firstColl = Math.max(Math.floor(player.x / this.tileSize)-3, 0);
+
+        for(i =firstRow; i<Math.min(this.height, firstRow+6); i++){
+            row = this.tiles[i];
+            for(j=firstColl; j < Math.min(this.width, firstColl+6); j++){
+                tile = this.tiles[i][j];
+                if(player.x >= tile.x-2 && player.x <= tile.x+2 + tile.size && player.y >= tile.y-2 && player.y <= tile.y + tile.size+2){
+                    collidingTiles.push(tile);
+                }
+            }
+        }
+        return collidingTiles;
     }
+
+
+
+
 
 });
 
