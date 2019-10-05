@@ -2,6 +2,7 @@ var States = {
     NONE: 0,
     MENU: 1,
     GAME: 2,
+    LVL1: 3
 }
 
 var Game = Class.extend({
@@ -17,7 +18,7 @@ var Game = Class.extend({
         });
 
         this.currentState = new NullState(this);
-        this.nextState = States.MENU;
+        this.nextState = States.LVL1;
     },
 
     run: function(){
@@ -32,6 +33,9 @@ var Game = Class.extend({
                         break;
                     case States.GAME:
                         self.currentState = new GameState(self);
+                        break;
+                    case States.LVL1:
+                        self.currentState = new Lvl1State(self);
                         break;
                 }
                 self.nextState = States.NONE;
