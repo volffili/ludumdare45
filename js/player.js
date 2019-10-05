@@ -1,12 +1,44 @@
-var Nut = Sprite.extend({
-    init: function(game,img,x,y,scale){
-        this._super(img,x,y,scale);
+var Player = Sprite.extend({
+
+    anim:{
+        move:{
+            start: 0,
+            end: 6,
+            speed: 0.1
+        },
+        idle:{
+            start: 7,
+            end: 12,
+            speed: 7
+        },
+        backslide:{
+            start: 13,
+            end: 15,
+            speed: 0.1
+        },
+        chew:{
+            start: 16,
+            end: 22,
+            speed: 0.1
+        },
+        attack:{
+            start: 23,
+            end: 30,
+            speed: 0.1
+        }
+    },
+
+
+    init: function(game,x,y){
         this.game = game;
-        this.friction = Math.pow(0.85,60);
+        this._super(game.resources.images.player,x,y,2,0,21,21);
+        this.friction = Math.pow(0.82,60);
         this.xmov = 0;
         this.ymov = 0;
         this.xacc = 0;
         this.yacc = 0;
+        this.currentAnim = this.anim.idle;
+        this.frame = this.currentAnim.start;
     },
 
     update:function(){
@@ -24,6 +56,7 @@ var Nut = Sprite.extend({
         this.ymov += this.yacc*this.game.delta*40;
         this.xmov *= Math.pow(this.friction,this.game.delta);
         this.ymov *= Math.pow(this.friction,this.game.delta);
+
         this.x += this.xmov;
         this.y += this.ymov;
     }

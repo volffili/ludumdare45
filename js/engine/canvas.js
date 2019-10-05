@@ -16,6 +16,8 @@ var Canvas = Class.extend({
             return ctx;
         })(this.canvas.getContext("2d"));
 
+        this.ctx.imageSmoothingEnabled= false;
+
         document.body.appendChild(this.canvas);
     },
     

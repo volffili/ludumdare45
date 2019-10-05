@@ -4,7 +4,7 @@ var Lvl1State = State.extend({
         this._super(game);
         this.game = game;
         this.terrain = new Terrain(game);
-        this.nut = new Nut(this.game,this.game.resources.images.nut,32*10,32*5,1);
+        this.player = new Player(this.game,320,160);
         this.cameraX = 0;
         this.cameraY = 0;
     },
@@ -15,7 +15,7 @@ var Lvl1State = State.extend({
     },
 
     update:function(){
-        this.nut.update();
+        this.player.update();
 
 
         collidingTiles = [];
@@ -24,14 +24,14 @@ var Lvl1State = State.extend({
     },
 
     render:function(ctx) {
-        this.cameraX = Math.max(0, this.nut.x -ctx.width/2);
-        this.cameraY = Math.max(0, this.nut.y -ctx.height/2);
+        this.cameraX = Math.max(0, this.player.x -ctx.width/2);
+        this.cameraY = Math.max(0, this.player.y -ctx.height/2);
         this.cameraX = Math.min(this.cameraX, this.terrain.tileSize * this.terrain.width-ctx.width);
         this.cameraY = Math.min(this.cameraY, this.terrain.tileSize * this.terrain.height-ctx.height);
 
         ctx.clearAll();
         this.terrain.render(ctx, this.cameraX,this.cameraY);
-        this.nut.render(ctx, 1, this.cameraX, this.cameraY);
+        this.player.render(ctx, 1, this.cameraX, this.cameraY);
     }
 
 });

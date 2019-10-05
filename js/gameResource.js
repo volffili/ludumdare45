@@ -4,7 +4,7 @@ var GameResources = Class.extend({
         this.imagesToLoad = {
             planet: "planet.png",
             tileset: "tileset.png",
-            nut: "nut.png"
+            player: "player.png",
         };
 
         this.images = {};
