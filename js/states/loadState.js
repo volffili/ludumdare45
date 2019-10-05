@@ -7,7 +7,7 @@ var LoadState = State.extend({
 
     afterLoad: function(){
         console.log("going to menu");
-        this.game.nextState = States.MENU;
+        this.game.nextState = States.INTRO;
     },
 
     handleInputs:function(input){

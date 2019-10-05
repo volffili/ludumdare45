@@ -2,6 +2,7 @@ var States = {
     LOADING: 0,
     MENU: 1,
     GAME: 2,
+    INTRO: 3
 }
 
 var Game = Class.extend({
@@ -32,6 +33,9 @@ var Game = Class.extend({
                         break;
                     case States.GAME:
                         self.currentState = new GameState(self);
+                        break;
+                    case States.INTRO:
+                        self.currentState = new IntroState(self);
                         break;
                 }
                 self.nextState = States.NONE;
