@@ -1,23 +1,17 @@
 var Tile = Class.extend({
 
-    init: function(tileType){
-        this.tileType=tileType;
+    init: function (tileType, x, y, game) {
+        this.tileType = tileType;
+        this.x = x;
+        this.y = y;
         this.size = 32;
+        this.game = game;
     },
 
-    render:function(ctx, x, y){
-        /*ctx.drawImage(tileset,x,y,w,h,64,ys,ws,hs);*/
-        if(this.tileType==1){
-            ctx.fillStyle    = '#ffb15c';
-        }
-        else if(this.tileType==2){
-            ctx.fillStyle    = '#6bafff';
-        }
-        else{
-            ctx.fillStyle    = '#0000ff';
-        }
+    render: function (ctx, cameraX, cameraY) {
+        
+        ctx.drawImage(this.game.resources.images.tileset, ((this.tileType - 1) * this.size), 0, this.size, this.size, this.x - cameraX, this.y - cameraY, this.size, this.size);
 
-        ctx.fillRect(x, y, this.size, this.size);
     }
 
 });
