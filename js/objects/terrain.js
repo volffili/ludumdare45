@@ -9,14 +9,14 @@ var Terrain = Class.extend({
 
     render: function (ctx, cameraX, cameraY) {
 
-        var firstRow = math.floor(CameraY / this.tileSize);
-        var firstColl = math.floor(CameraX / this.tileSize);
+        var firstRow = Math.floor(cameraY / this.tileSize);
+        var firstColl = Math.floor(cameraX / this.tileSize);
 
         for(i =firstRow; i<Math.min(this.height, firstRow+Math.floor(ctx.height / this.tileSize)); i++){
             row = this.tiles[i];
             for(j=firstColl; j < Math.min(this.width, firstColl+Math.floor(ctx.width / this.tileSize)); j++){
                 tile = this.tiles[i][j];
-                tile.render(i*this.tileSize - cameraX, j*this.tileSize - cameraY);
+                tile.render(ctx, i*this.tileSize - cameraX, j*this.tileSize - cameraY);
             }
         }
 

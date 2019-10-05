@@ -19,8 +19,9 @@ var Game = Class.extend({
         });
 
 
-        this.currentState = new LoadState(this);
-        this.nextState = States.LOADING;
+        //this.currentState = new LoadState(this);
+        this.currentState = new Lvl1State(this);
+        this.nextState = new Lvl1State(this);
 
     },
 
@@ -39,6 +40,7 @@ var Game = Class.extend({
                         break;
                     case States.LVL1:
                         self.currentState = new Lvl1State(self);
+                        break;
                     case States.INTRO:
                         self.currentState = new IntroState(self);
                         break;
