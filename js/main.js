@@ -1,10 +1,11 @@
 var States = {
     NONE: 0,
     MENU: 1,
-    GAME: 2
+    GAME: 2,
 }
 
 var Game = Class.extend({
+
     init: function(){
         this.canvas = new Canvas(640,480);
 
@@ -18,6 +19,7 @@ var Game = Class.extend({
         this.currentState = new NullState(this);
         this.nextState = States.MENU;
     },
+
     run: function(){
         var self = this;
 

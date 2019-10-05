@@ -13,8 +13,8 @@ var GameState = State.extend({
     },
     render:function(ctx){
         ctx.clearAll();
-        ctx.fillStyle    = '#ff00ff';
-        ctx.fillRect(20, 20, 150, 100);
+        ctx.fillStyle    = '#0000ff';
+        ctx.fillRect(20, 20, 150, 400);
     }
 
 });

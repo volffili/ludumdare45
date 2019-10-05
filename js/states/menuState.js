@@ -13,9 +13,8 @@ var MenuState = State.extend({
     },
 
     render:function(ctx){
-        ctx.fillStyle    = '#ff00ff';
-        ctx.fillRect(20, 20, 150, 100);
         ctx.clearAll();
+        ctx.fillStyle    = '#ff00ff';
     }
 
 });
