@@ -1,7 +1,13 @@
-var NullState = State.extend({
+var LoadState = State.extend({
 
     init: function(game){
         this._super(game);
+        this.game.resources = new GameResources(this.afterLoad.bind(this));
+    },
+
+    afterLoad: function(){
+        console.log("going to menu");
+        this.game.nextState = States.INTRO;
     },
 
     handleInputs:function(input){
@@ -10,5 +16,4 @@ var NullState = State.extend({
     },
     update:function(){},
     render:function(ctx){}
-
 });
