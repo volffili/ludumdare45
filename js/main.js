@@ -1,5 +1,5 @@
 var States = {
-    NONE: 0,
+    LOADING: 0,
     MENU: 1,
     GAME: 2,
 }
@@ -16,8 +16,8 @@ var Game = Class.extend({
             fire: 	  68
         });
 
-        this.currentState = new NullState(this);
-        this.nextState = States.MENU;
+        this.currentState = new LoadState(this);
+        this.nextState = States.LOADING;
     },
 
     run: function(){

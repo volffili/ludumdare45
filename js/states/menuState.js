@@ -15,6 +15,7 @@ var MenuState = State.extend({
     render:function(ctx){
         ctx.clearAll();
         ctx.fillStyle    = '#ff00ff';
+        ctx.drawImage(this.game.resources.images.planet,0,0);
     }
 
 });
