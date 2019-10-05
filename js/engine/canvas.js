@@ -18,7 +18,7 @@ var Canvas = Class.extend({
 
         document.body.appendChild(this.canvas);
     },
-
+    
     animate: function(loop){
 
         var rf =

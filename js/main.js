@@ -19,12 +19,18 @@ var Game = Class.extend({
 
         this.currentState = new LoadState(this);
         this.nextState = States.LOADING;
+        this.lastTime = 0;
+        this.delta = 0;
+        this.currentTime = 0;
     },
 
     run: function(){
         var self = this;
 
         this.canvas.animate(function(){
+
+            self.currentTime = (new Date()).getTime();
+            self.delta = (self.currentTime - self.lastTime) / 1000;
 
             if(self.nextState !== States.NONE){
                 switch(self.nextState){
@@ -44,6 +50,8 @@ var Game = Class.extend({
             self.currentState.handleInputs(self.input);
             self.currentState.update();
             self.currentState.render(self.canvas.ctx);
+
+            self.lastTime = self.currentTime;
         });
     }
 });
