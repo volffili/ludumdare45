@@ -55,10 +55,15 @@ var Player = Sprite.extend({
 
         var crashed = 0;
         var stabbed = 0;
+        this.energy -= 1* this.game.delta;
         for(i=0; i<collidingTiles.length;i++){
             tile = collidingTiles[i];
             if (tile.tileType == 3){
                 crashed = 1;
+            }
+            else if(tile.tileType == 4){
+                tile.tileType = 1;
+                this.energy += 10;
             }
             else if(tile.tileType == 5){
                 this.energy -= 10 * this.game.delta;
