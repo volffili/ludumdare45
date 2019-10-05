@@ -2,7 +2,7 @@ var Nut = Sprite.extend({
     init: function(game,img,x,y,scale){
         this._super(img,x,y,scale);
         this.game = game;
-        this.friction = Math.pow(0.82,60);
+        this.friction = Math.pow(0.85,60);
         this.xmov = 0;
         this.ymov = 0;
         this.xacc = 0;
