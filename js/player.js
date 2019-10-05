@@ -4,7 +4,7 @@ var Player = Sprite.extend({
         move:{
             start: 0,
             end: 6,
-            speed: 0.1
+            speed: 10
         },
         idle:{
             start: 7,
@@ -24,14 +24,15 @@ var Player = Sprite.extend({
         attack:{
             start: 23,
             end: 30,
-            speed: 0.1
+            speed: 10
         }
     },
 
 
     init: function(game,x,y){
+        this.state = 'idle';
         this.game = game;
-        this._super(game.resources.images.player,x,y,2,0,21,21);
+        this._super(game.resources.images.player,x,y,2,2,0,21,21);
         this.friction = Math.pow(0.82,60);
         this.xmov = 0;
         this.ymov = 0;
@@ -42,8 +43,18 @@ var Player = Sprite.extend({
         this.energy = 100;
     },
 
-    update:function(collidingTiles){
-        this._super();
+    animateIdleOrMove: function(){
+        var speed = Math.sqrt(this.xmov*this.xmov+this.ymov*this.ymov)
+        this.currentAnim = speed > 1 ? this.anim.move : this.anim.idle;
+    },
+
+    jump: function(){
+        this.norm = Math.sqrt(this.xmov*this.xmov+this.ymov*this.ymov);
+        this.xmov = this.xmov/this.norm*this.game.delta*1500;
+        this.ymov = this.ymov/this.norm*this.game.delta*1500;
+    },
+
+    walk: function(){
         this.xacc = this.game.input.isDown("right") - this.game.input.isDown("left");
         this.yacc = this.game.input.isDown("down") - this.game.input.isDown("up");
 
@@ -72,15 +83,49 @@ var Player = Sprite.extend({
 
         this.xmov += this.xacc*this.game.delta*40;
         this.ymov += this.yacc*this.game.delta*40;
-        this.xmov *= Math.pow(this.friction,this.game.delta) * (1- 2.2*crashed);
-        this.ymov *= Math.pow(this.friction,this.game.delta)* (1- 2.2*crashed);
+        this.x += this.xmov*(((this.frame+3)%6)/6+0.1);
+        this.y += this.ymov*(((this.frame+3)%6)/6+0.1);
+    },
 
+    update:function(collidingTiles){
+        this._super();
 
+        this.frame += this.game.delta * this.currentAnim.speed;
 
+        switch(this.state){
+            case 'idle':
+            case 'move':
+                this.walk();
+                this.animateIdleOrMove();
 
-        this.x += this.xmov;
-        this.y += this.ymov;
+                if(this.game.input.isDown("fire") )
+                    this.state = 'attack';
+            break;
+            case 'attack':
+                this.jump();
+                this.currentAnim = this.anim.attack;
+                this.frame = this.currentAnim.start;
+                this.state = 'inair';
+            break;
+            case 'inair':
 
+                this.x += this.xmov;
+                this.y += this.ymov;
+                if (this.frame >= this.currentAnim.end) {
+                    this.state = 'move';
+                    this.currentAnim = this.anim.idle;
+                    this.frame = this.currentAnim.start;
+                }
 
+            break;
+        }
+
+        if (this.frame >= this.currentAnim.end) {
+            this.frame = this.currentAnim.start;
+        }
+
+        this.xmov *= Math.pow(this.friction,this.game.delta);
+        this.ymov *= Math.pow(this.friction,this.game.delta);
+        this.scalex = (this.xmov < 0) ? -2 : 2;
     }
 });

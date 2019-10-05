@@ -17,9 +17,6 @@ var Lvl1State = State.extend({
     update:function(){
         collidingTiles = this.terrain.getCollidingTiles(this.player);
         this.player.update(collidingTiles);
-
-
-
     },
 
     render:function(ctx) {

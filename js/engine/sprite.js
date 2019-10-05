@@ -1,16 +1,17 @@
 var Sprite = Class.extend({
-    init: function(img,x,y,scale=1,angle=0,w,h){
+    init: function(img,x,y,scalex=1,scaley=1,angle=0,w,h){
+        this.w = w || img.width;
+        this.h = h || img.height;
         this.img = img;
-        this.scale = scale;
+        this.scalex = scalex;
+        this.scaley = scaley;
         this.x = x;
         this.y = y;
         this.xorigin = 0.5;
         this.yorigin = 0.5;
         this.angle = angle;
 
-        this.w = w || this.img.width;
-        this.h = h || this.img.height;
-
+        this.frame = 0;
         this.currentAnim = {
             start: 0,
             end: 0,
@@ -19,27 +20,17 @@ var Sprite = Class.extend({
     },
 
     update:function(){
-        this.frame += this.game.delta*this.currentAnim.speed;
-        if(this.frame >= this.currentAnim.end){
-            this.frame = this.currentAnim.start;
-        }
+
     },
 
-    getWidth: function(){
-        return this.w*this.scale;
-    },
-
-    getHeight: function(){
-        return this.h*this.scale;
-    },
-
-    render:function(ctx,scale=1, cameraX=0, cameraY=0){
+    render:function(ctx,scale=1,cameraX=0, cameraY=0){
         ctx.save();
-        var w = this.getWidth()*scale;
-        var h = this.getHeight()*scale;
         ctx.translate(this.x-cameraX,this.y-cameraY);
         ctx.rotate(this.angle*Math.PI/180);
-        ctx.drawImage(this.img,Math.floor(this.frame*this.w/this.w)*this.w,0,this.w,this.h,-w*this.xorigin,-h*this.yorigin,w*scale,h*scale);
+        ctx.scale(this.scalex,this.scaley);
+        var xsource = Math.floor(this.frame*this.w/this.w)*this.w;
+        ctx.drawImage(this.img,xsource,0,this.w,this.h,-this.w*this.xorigin,-this.h*this.yorigin,this.w,this.h);
         ctx.restore();
     }
+
 })
