@@ -19,11 +19,11 @@ var Sprite = Class.extend({
         return this.img.height*this.scale;
     },
 
-    render:function(ctx,scale=1){
+    render:function(ctx,scale=1, cameraX=0, cameraY=0){
         ctx.save();
         var w = this.getWidth()*scale;
         var h = this.getHeight()*scale;
-        ctx.translate(this.x,this.y);
+        ctx.translate(this.x-cameraX,this.y-cameraY);
         ctx.rotate(this.angle*Math.PI/180);
         ctx.drawImage(this.img,-w*this.xorigin,-h*this.yorigin,w*scale,h*scale);
         ctx.restore();
