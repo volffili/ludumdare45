@@ -14,9 +14,9 @@ var IntroState = State.extend({
     },
 
     render:function(ctx){
-        this.zoom += 0.0007;
+        this.zoom += 0.03*this.game.delta;
         ctx.clearAll();
-        ctx.fillStyle    = '#ff00ff';
+        ctx.fillStyle = '#ff00ff';
         var img_planet = this.game.resources.images.planet;
         var w = img_planet.width*this.zoom;
         var h = img_planet.height*this.zoom;
