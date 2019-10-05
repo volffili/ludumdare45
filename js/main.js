@@ -10,6 +10,7 @@ var Game = Class.extend({
     init: function(){
         this.canvas = new Canvas(640,480);
 
+
         this.input = new InputHandler({
             left:     74,
             up:       73,

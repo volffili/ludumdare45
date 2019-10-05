@@ -1,7 +1,11 @@
 var IntroState = State.extend({
     init: function(game){
         this._super(game);
-        this.zoom = 0.8;
+        this.totalScale = 0.8;
+        this.sprites = [];
+        //planet
+        var ctx = this.game.canvas.ctx;
+        this.sprites.push(new Sprite(this.game.resources.images.planet,ctx.width/2,ctx.height/2,this.totalScale));
     },
 
     handleInputs:function(input){
@@ -9,20 +13,18 @@ var IntroState = State.extend({
         if(input.isDown("right")){ do something }*/
     },
 
-    update:function(){
-
-    },
+    update:function(){ },
 
     render:function(ctx){
-        this.zoom += 0.03*this.game.delta;
+        this.totalScale += 0.03*this.game.delta;
         ctx.clearAll();
         ctx.fillStyle = '#ff00ff';
-        var img_planet = this.game.resources.images.planet;
-        var w = img_planet.width*this.zoom;
-        var h = img_planet.height*this.zoom;
-        var x = (ctx.width - w)/2;
-        var y = (ctx.height - h)/2;
-        ctx.drawImage(img_planet,x,y,w,h);
+
+        for(var i in this.sprites){
+            var sprite = this.sprites[i];
+            sprite.scale = this.totalScale;
+            sprite.render(ctx);
+        }
     }
 
 });
