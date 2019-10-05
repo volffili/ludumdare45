@@ -11,16 +11,16 @@ var Game = Class.extend({
     init: function(){
         this.canvas = new Canvas(640,480);
 
-
         this.input = new InputHandler({
             left:     74,
             up:       73,
+            down:     75,
             right:    76,
             fire: 	  68
         });
 
         this.currentState = new LoadState(this);
-        this.nextState = new Lvl1State(this);
+        this.nextState = new LoadState(this);
         this.lastTime = 0;
         this.delta = 0;
         this.currentTime = 0;

@@ -25,11 +25,16 @@ var IntroState = State.extend({
 
         this.planet.render(ctx,this.totalScale);
 
+
         ctx.font         = '20px myfont';
         ctx.fillStyle    = '#ffffff';
         ctx.textBaseline = 'middle';
         ctx.textAlign		 = "center";
         ctx.fillText('There was a lonely planet...', ctx.width/2, ctx.height/12*11);
+
+
+
+
     }
 
 });

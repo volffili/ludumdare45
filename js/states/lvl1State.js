@@ -1,10 +1,9 @@
 var Lvl1State = State.extend({
 
     init: function(game){
-        console.log("Creating lvl1");
         this._super(game);
         this.terrain = new Terrain(game);
-        console.log("Terrain loaded");
+        this.nut = new Nut(this.game,this.game.resources.images.nut,32*10,32*5,1);
     },
 
     handleInputs:function(input){
@@ -13,12 +12,13 @@ var Lvl1State = State.extend({
     },
 
     update:function(){
-
+        this.nut.update();
     },
+
     render:function(ctx) {
         ctx.clearAll();
-        console.log("Drawing lv1");
-        this.terrain.render(ctx, 10,10);
+        this.terrain.render(ctx, 0,0);
+        this.nut.render(ctx);
     }
 
 });
