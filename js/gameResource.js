@@ -3,7 +3,8 @@ var GameResources = Class.extend({
         this.imgRoot = "images/";
         this.imagesToLoad = {
             planet: "planet.png",
-            cloud: "cloud.png"
+            cloud1: "cloud1.png",
+            cloud2: "cloud2.png"
         };
 
         this.images = {};

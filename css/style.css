@@ -13,3 +13,8 @@ canvas{
     left:0;
     right:0;
 }
+
+@font-face {
+    font-family: 'myfont';
+    src: url('../FFFFORWA.TTF');
+}
