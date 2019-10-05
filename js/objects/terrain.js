@@ -1,24 +1,21 @@
 var Terrain = Class.extend({
 
     init: function (game) {
-        this.game = game
+        this.game = game;
         this.tileSize = 32;
         this.tiles = loadTiles(this.tileSize, game);
         this.height = this.tiles.length;
-        this.width=this.tiles[0].length;
-
-
+        this.width  = this.tiles[0].length;
     },
 
     render: function (ctx, cameraX, cameraY) {
-
         var firstRow = Math.floor(cameraY / this.tileSize);
         var firstColl = Math.floor(cameraX / this.tileSize);
 
-        for(i =firstRow; i<Math.min(this.height, firstRow+Math.floor(ctx.height / this.tileSize)+1); i++){
-            row = this.tiles[i];
-            for(j=firstColl; j < Math.min(this.width, firstColl+Math.floor(ctx.width / this.tileSize)+1); j++){
-                tile = this.tiles[i][j];
+        for(var i =firstRow; i<Math.min(this.height, firstRow+Math.floor(ctx.height / this.tileSize)+1); i++){
+            var row = this.tiles[i];
+            for(var j=firstColl; j < Math.min(this.width, firstColl+Math.floor(ctx.width / this.tileSize)+1); j++){
+                var tile = this.tiles[i][j];
                 //tile.render(ctx, i*this.tileSize - cameraX, j*this.tileSize - cameraY);
                 tile.render(ctx, cameraX, cameraY);
             }
@@ -27,15 +24,15 @@ var Terrain = Class.extend({
     },
 
     getCollidingTiles: function (player) {
-        collidingTiles = [];
+        var collidingTiles = [];
 
         var firstRow = Math.max(Math.floor(player.y / this.tileSize)-3,0);
         var firstColl = Math.max(Math.floor(player.x / this.tileSize)-3, 0);
 
-        for(i =firstRow; i<Math.min(this.height, firstRow+6); i++){
-            row = this.tiles[i];
-            for(j=firstColl; j < Math.min(this.width, firstColl+6); j++){
-                tile = this.tiles[i][j];
+        for(var i =firstRow; i<Math.min(this.height, firstRow+6); i++){
+            var row = this.tiles[i];
+            for(var j=firstColl; j < Math.min(this.width, firstColl+6); j++){
+                var tile = this.tiles[i][j];
                 if(player.x >= tile.x-2 && player.x <= tile.x+2 + tile.size && player.y >= tile.y-2 && player.y <= tile.y + tile.size+2){
                     collidingTiles.push(tile);
                 }
@@ -43,11 +40,6 @@ var Terrain = Class.extend({
         }
         return collidingTiles;
     }
-
-
-
-
-
 });
 
 function loadTiles(tileSize, game) {
@@ -56,9 +48,9 @@ function loadTiles(tileSize, game) {
     var width = 50;
     var tiles = [];
 
-    for (i = 0; i < height; i++) {
+    for (var i = 0; i < height; i++) {
         var row = [];
-        for (j = 0; j < width; j++) {
+        for (var j = 0; j < width; j++) {
             var tile = new Tile(data[i * width + j], tileSize*j, tileSize*i, game);
             row.push(tile)
         }

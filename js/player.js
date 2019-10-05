@@ -64,32 +64,28 @@ var Player = Sprite.extend({
             this.yacc /= this.norm;
         }
 
-        var crashed = 0;
-        var stabbed = 0;
-        this.energy -= 1* this.game.delta;
-        for(i=0; i<collidingTiles.length;i++){
-            tile = collidingTiles[i];
-            if (tile.tileType == 3){
-                crashed = 1;
-            }
-            else if(tile.tileType == 4){
-                tile.tileType = 1;
-                this.energy += 10;
-            }
-            else if(tile.tileType == 5){
-                this.energy -= 10 * this.game.delta;
-            }
-        }
-
-        this.xmov += this.xacc*this.game.delta*40;
-        this.ymov += this.yacc*this.game.delta*40;
-        this.x += this.xmov*(((this.frame+3)%6)/6+0.1);
-        this.y += this.ymov*(((this.frame+3)%6)/6+0.1);
+        this.xmov += this.xacc*this.game.delta*40*(((this.frame)%6)/6+0.1);
+        this.ymov += this.yacc*this.game.delta*40*(((this.frame)%6)/6+0.1);
     },
 
-    update:function(collidingTiles){
+    updateVars: function(){
+        this.xmov *= Math.pow(this.friction,this.game.delta);
+        this.ymov *= Math.pow(this.friction,this.game.delta);
+        this.prevx = this.x;
+        this.prevy = this.y;
+        this.x += this.xmov;
+        this.y += this.ymov;
+
+        if (this.frame >= this.currentAnim.end) {
+            this.frame = this.currentAnim.start;
+        }
+        this.scalex = (this.xmov < 0) ? -2 : 2;
+    },
+
+    update:function(terrain){
         this._super();
 
+        this.energy -= 1* this.game.delta;
         this.frame += this.game.delta * this.currentAnim.speed;
 
         switch(this.state){
@@ -109,8 +105,6 @@ var Player = Sprite.extend({
             break;
             case 'inair':
 
-                this.x += this.xmov;
-                this.y += this.ymov;
                 if (this.frame >= this.currentAnim.end) {
                     this.state = 'move';
                     this.currentAnim = this.anim.idle;
@@ -120,12 +114,27 @@ var Player = Sprite.extend({
             break;
         }
 
-        if (this.frame >= this.currentAnim.end) {
-            this.frame = this.currentAnim.start;
+        this.updateVars();
+        this.checkCollisions(terrain);
+
+    },
+
+    checkCollisions: function(terrain){
+        var collidingTiles = terrain.getCollidingTiles(this);
+
+        for(var i=0; i<collidingTiles.length;++i){
+            var tile = collidingTiles[i];
+            if (tile.tileType == 3){
+                console.log("fire");
+                this.x = this.prevx;
+                this.y = this.prevy;
+            } else if(tile.tileType == 4){
+                tile.tileType = 1;
+                this.energy += 10;
+            } else if(tile.tileType == 5){
+                this.energy -= 10 * this.game.delta;
+            }
         }
 
-        this.xmov *= Math.pow(this.friction,this.game.delta);
-        this.ymov *= Math.pow(this.friction,this.game.delta);
-        this.scalex = (this.xmov < 0) ? -2 : 2;
     }
 });

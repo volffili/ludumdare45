@@ -15,8 +15,7 @@ var Lvl1State = State.extend({
     },
 
     update:function(){
-        collidingTiles = this.terrain.getCollidingTiles(this.player);
-        this.player.update(collidingTiles);
+        this.player.update(this.terrain);
     },
 
     render:function(ctx) {
@@ -29,7 +28,7 @@ var Lvl1State = State.extend({
         this.terrain.render(ctx, this.cameraX,this.cameraY);
         this.player.render(ctx, 1, this.cameraX, this.cameraY);
         ctx.fillStyle    = '#22cc22';
-        ctx.font = "50px Georgia";
+        ctx.font = "20px myfont";
         ctx.fillText(Math.round(this.player.energy), 10, 50);
     }
 
